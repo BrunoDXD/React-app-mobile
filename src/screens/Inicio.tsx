@@ -1,29 +1,41 @@
 import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-// dados para produtos
-const produtos=[
-  {id: '1', nome: 'Tênis', preco: '300,00', imagem: 'data:image/jpeg;base64,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'},
-  {id: '2', nome: 'Bota', preco: '250,00', imagem: 'data:image/jpeg;base64,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'},
-  {id: '3', nome: 'Havaianas', preco: '30,00', imagem: 'https://havaianas.com.br/dw/image/v2/BDDJ_PRD/on/demandware.static/-/Sites-havaianas-master/default/dw025161ef/product-images/4110850_2711_HAVAIANAS%20BRASIL%20LOGO_D.png?sw=680&sh=680'},
+
+const produtos = [
+  { id: '10', nome: 'Nike Airmax TN', preco: 'De R$ 330,00 por R$ 165,00 ', imagem: 'https://acdn.mitiendanube.com/stores/002/944/067/products/semtitulo-1_3432a893-a85d-44eb-af8e-849ddf7ef8511-a7b50881e6e8120af916839009942099-1024-1024.webp' },
+  { id: '20', nome: 'Bota Nike Manoa Leather', preco: 'De R$ 500,00 por R$ 250,00', imagem: 'https://www.esportepresidente.com.br/media/catalog/product/cache/2/image/1000x/9df78eab33525d08d6e5fb8d27136e95/b/o/bota_nike_manoa_leather_preta.jpg' },
+  { id: '30', nome: 'Chinelo Havaianas Brasil', preco: 'De R$ 50,00 por R$ 25,00', imagem: 'https://images.tcdn.com.br/img/img_prod/772596/chinelo_havaianas_brasil_2759_1_4a0abc5f56be1cf1556f3dd152a11192.jpg' }
 ];
+
 export default function Inicio() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.cabecalho}>
-          <Text style={styles.titulocabecalho}>Destaques</Text>
+          <Text style={styles.titulocabecalho}>PROMOÇÃO DE ANIVERSÁRIO DA LOJA!!!</Text>
+          <Text style={styles.subtitulo}>Todos os tênis da loja</Text>
+          <Text style={styles.subtitulo}>com 50% de desconto!!!!</Text>
           <FlatList
-          data={produtos}
-          renderItem={({item})=>(
-            <View>
-              <Image source={{uri: item.imagem}}
-              style={styles.image}/>
-              <Text>{item.nome}</Text>
-              <Text>{item.preco}</Text>
-            </View>
-          )}
-          keyExtractor={item => item.id} horizontal
-          />    
+            data={produtos}
+            renderItem={({ item }) => (
+              <View style={styles.cardproduto}>
+                <Image 
+                  source={{ uri: item.imagem }} 
+                  style={styles.imagemproduto} 
+                />
+                <View style={styles.produto}>
+                  <Text style={styles.nomeproduto}>{item.nome}</Text>
+                  <Text style={styles.nomeproduto}>{item.preco}</Text>
+                </View>
+                <View style={styles.subtitulo}>
+                  <Text style={styles.subtitulo}>SOMENTE ESSA SEMANA!</Text>
+                </View>
+              </View>
+            )}
+            keyExtractor={item => item.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -32,20 +44,45 @@ export default function Inicio() {
 
 const styles = StyleSheet.create({
   cabecalho: {
-    padding: 20,
+    padding: 10,
+    alignItems: 'center',
   },
   titulocabecalho: {
-    fontSize: 18,
+    fontSize: 30,
     marginBottom: 10,
+    fontWeight: 'bold',
+    color: '#111111',
   },
-  image: {
-    width: 100,
-    height: 100,
+  subtitulo: {
+    fontSize: 20,
+    marginBottom: 10,
+    fontWeight: 'bold',
   },
-    container: {
-      flex: 1,
-      backgroundColor: '#bb0ff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: '#f0fff0',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardproduto: {
+    alignItems: 'center',
+    marginRight: 20,
+    paddingHorizontal: 10,
+  },
+  
+  imagemproduto: {
+    width: 250,
+    height: 200,
+    resizeMode: 'contain',
+    borderRadius: 10,
+  },
+  produto: {
+    alignItems: 'center', 
+    marginTop: 10,
+  },
+  nomeproduto: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#11111',
+  }
+});
